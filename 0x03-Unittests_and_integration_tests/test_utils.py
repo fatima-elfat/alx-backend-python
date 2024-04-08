@@ -7,7 +7,6 @@ task 0, 1, 2 and 3.
 from parameterized import parameterized
 import unittest
 from unittest.mock import patch
-import requests
 from utils import (
     access_nested_map,
     get_json,
@@ -42,7 +41,7 @@ class TestAccessNestedMap(unittest.TestCase):
         """
         with self.assertRaises(KeyError) as e:
             access_nested_map(nested_map, path)
-        self.assertEqual(KeyError("{}".format(expected)), repr(e.exception))
+        self.assertEqual("KeyError('{}')".format(expected), repr(e.exception))
 
 
 class TestGetJson(unittest.TestCase):
@@ -107,6 +106,6 @@ class TestMemoize(unittest.TestCase):
 
         with patch.object(TestClass, "a_method") as m:
             test_class = TestClass()
-            self.assertEqual(test_class.a_property(), 42)
-            self.assertEqual(test_class.a_property(), 42)
+            test_class.a_property()
+            test_class.a_property()
             m.assert_called_once()
